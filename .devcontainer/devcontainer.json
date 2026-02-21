@@ -1,0 +1,15 @@
+{
+  "name": "ga2-8750ed",
+  "features": {
+    "ghcr.io/devcontainers/features/python:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astral-sh.uv",
+        "ms-python.python"
+      ]
+    }
+  },
+  "postCreateCommand": "uv pip install fastapi"
+}
