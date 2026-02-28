@@ -1,0 +1,31 @@
+name: Daily Repository Update
+
+on:
+  schedule:
+    # Runs once per day at 03:15 UTC (specific hour + minute, no wildcards)
+    - cron: "15 3 * * *"
+  workflow_dispatch: {}   # lets you trigger it manually right now
+
+permissions:
+  contents: write   # allow GITHUB_TOKEN to push commits
+
+jobs:
+  daily_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Daily update (24f3004936@ds.study.iitm.ac.in)
+        run: |
+          # Make a change every run (append a timestamp)
+          echo "Daily update: $(date -u)" >> devsync-daily-log.txt
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "devsync-bot"
+          git config user.email "24f3004936@ds.study.iitm.ac.in"
+
+          git add devsync-daily-log.txt
+          git commit -m "chore: daily automated update"
+          git push
